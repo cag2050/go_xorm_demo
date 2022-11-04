@@ -12,6 +12,10 @@ import (
 )
 
 func TestInsert(t *testing.T) {
+	name := "name888"
+	rand.Seed(time.Now().UnixNano())
+	account := "account" + strconv.Itoa(rand.Intn(1000)+1)
+
 	engine, err := common.CreateXORMEngine()
 	if err != nil {
 		fmt.Println(fmt.Sprintf("%+v", err))
@@ -19,9 +23,8 @@ func TestInsert(t *testing.T) {
 	}
 
 	user := new(model.User)
-	user.Name = "myname1"
-	rand.Seed(time.Now().UnixNano())
-	user.Account = "account" + strconv.Itoa(rand.Intn(1000)+1)
+	user.Name = name
+	user.Account = account
 	user.State = 1
 
 	affected, insertErr := engine.InsertOne(user)

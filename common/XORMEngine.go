@@ -2,8 +2,10 @@ package common
 
 import (
 	"fmt"
-	"github.com/go-xorm/xorm"
-	"xorm.io/core"
+	"github.com/cag2050/go_xorm_demo/log"
+	"github.com/cag2050/go_xorm_demo/utildb"
+	"xorm.io/xorm"
+	xormLog "xorm.io/xorm/log"
 )
 
 func CreateXORMEngine() (*xorm.Engine, error) {
@@ -19,8 +21,16 @@ func CreateXORMEngine() (*xorm.Engine, error) {
 		fmt.Println(fmt.Sprintf("%+v", err))
 		return nil, fmt.Errorf("create failed, error:%v, dataSourceName:%v", err, dataSourceName)
 	}
-	engine.ShowExecTime(true)
+
+	logger := log.StandardLogger()
+	engine.SetLogger(utildb.NewXormLogger("", logger))
+
 	engine.ShowSQL(true)
-	engine.SetLogLevel(core.LOG_DEBUG)
+	engine.SetLogLevel(xormLog.LOG_DEBUG)
+
+	if pingErr := engine.Ping(); pingErr != nil {
+		return nil, pingErr
+	}
+
 	return engine, nil
 }

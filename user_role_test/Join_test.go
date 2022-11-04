@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// 返回用户表的数据，同时带角色信息（用户和角色是一对一关系）
 func TestJoin(t *testing.T) {
 	name := "user"
 
