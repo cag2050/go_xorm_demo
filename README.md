@@ -1,6 +1,7 @@
-## XORM 使用注意点：
+## XORM：Go 语言 ORM 框架
 
-### DeletedAt对应的数据库字段，必须允许NULL并且设置默认为NULL
+### XORM 使用注意点：
+1. DeletedAt对应的数据库字段，必须允许NULL并且设置默认为NULL
 举例，go结构体：
 ```go
 type User struct {
@@ -20,5 +21,9 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 ```
+2. UNIQUE KEY 类型的mysql字段，重复插入时，报错：Error 1062: Duplicate entry '' for key 'your_key'
 
-### UNIQUE KEY 类型的mysql字段，重复插入时，报错：Error 1062: Duplicate entry '' for key 'your_key'
+资料 | 说明
+--- | ---
+xorm官网 | https://xorm.io/zh/
+结合RBAC模型讲解权限管理系统需求及表结构创建 | https://juejin.cn/post/6844904004984504333
